@@ -1,0 +1,27 @@
+﻿<UserControl x:Name="userControl" x:Class="VisualProgrGUI.View.Panes.Pane"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/VisualProgrGUI;component/Resources/styles/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border BorderBrush="Black" Margin="0" Background="{Binding HeaderBackground, ElementName=userControl}">
+            <Label HorizontalAlignment="Left" VerticalAlignment="Top" Content="{Binding Label, ElementName=userControl}" Foreground="{Binding Foreground, ElementName=userControl}"/>
+        </Border>
+        <Border Grid.Row="1" Background="{Binding Background, ElementName=userControl}">
+            <ContentPresenter Content="{Binding Contains, ElementName=userControl}"></ContentPresenter>
+        </Border>     
+    </Grid>
+</UserControl>

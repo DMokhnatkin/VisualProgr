@@ -1,0 +1,92 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vv="clr-namespace:VisualProgrGUI.View"
+                    xmlns:vm="clr-namespace:VisualProgrGUI.ViewModel"
+                    xmlns:vvp="clr-namespace:VisualProgrGUI.View.Panes"
+                    xmlns:conv="clr-namespace:VisualProgrGUI.ViewModel.Converters"
+                    xmlns:SchemeControl="clr-namespace:SchemeControlLib;assembly=SchemeControlLib">
+
+    <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    <conv:ConverterChain x:Key="BoolToVisInverted">
+        <conv:BoolToInverse></conv:BoolToInverse>
+        <BooleanToVisibilityConverter></BooleanToVisibilityConverter>
+    </conv:ConverterChain>
+    
+    <!--Style for panes-->
+    <Style x:Key="Pane_Dark" TargetType="vvp:Pane">
+        <Setter Property="HeaderBackground" Value="#FF494949"></Setter>
+        <Setter Property="Background" Value="#FF5D5D5D"></Setter>
+        <Setter Property="Foreground" Value="White"></Setter>
+    </Style>
+    
+    <Style x:Key="Pane_Gray" TargetType="vvp:Pane">
+        <Setter Property="HeaderBackground" Value="Gray"></Setter>
+        <Setter Property="Background" Value="#FF707070"></Setter>
+        <Setter Property="Foreground" Value="White"></Setter>
+    </Style>
+    
+    <!--Hotspot templates-->
+    <ControlTemplate x:Key="BooleanHotspotTemplate" TargetType="Button">
+        <Grid>
+            <Ellipse x:Name="PART_Button" Stroke="#FF292929" Fill="#CC3B7E15" HorizontalAlignment="Center" Height="15" VerticalAlignment="Center" Width="15" StrokeThickness="1"/>
+            <Ellipse x:Name="highlightEllipse" Width="9" Height="9" Visibility="{Binding Path=IsConnected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type SchemeControl:PortControl}}, Converter={StaticResource BoolToVis}}" Fill="Black" StrokeThickness="3" Margin="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Stroke" Value="Gold" TargetName="PART_Button"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="IntegerHotspotTemplate" TargetType="Button">
+        <Grid>
+            <Ellipse x:Name="PART_Button" Stroke="#FF292929" Fill="#CCEA6223" HorizontalAlignment="Center" Height="15" VerticalAlignment="Center" Width="15" StrokeThickness="1"/>
+            <Ellipse x:Name="highlightEllipse" Width="9" Height="9" Visibility="{Binding Path=IsConnected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type SchemeControl:PortControl}}, Converter={StaticResource BoolToVis}}" Fill="Black" StrokeThickness="3" Margin="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Stroke" Value="Gold" TargetName="PART_Button"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+
+    <ControlTemplate x:Key="InputPort" TargetType="{x:Type SchemeControl:PortControl}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="50*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="PART_Hotspot" Cursor="Hand" HorizontalAlignment="Stretch" Command="SchemeControl:PortControl.SelectCommand" VerticalAlignment="Stretch" Content="" Style="{TemplateBinding HotspotStyle}" Template="{TemplateBinding HotspotTemplate}" />
+            <ContentPresenter Grid.Column="1" Margin="2,0,0,0"/>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="OutputPort" TargetType="{x:Type SchemeControl:PortControl}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="20*"/>
+            </Grid.ColumnDefinitions>
+            <ContentPresenter Margin="0,0,2,0"/>
+            <Button x:Name="PART_Hotspot" Cursor="Hand" Grid.Column="1" Command="SchemeControl:PortControl.SelectCommand" Height="20" Width="20" Content="" Style="{TemplateBinding HotspotStyle}" Template="{TemplateBinding HotspotTemplate}"/>
+        </Grid>
+    </ControlTemplate>
+
+    
+    <Style x:Key="InputBooleanPort" TargetType="{x:Type SchemeControl:PortControl}">
+        <Setter Property="Template" Value="{DynamicResource InputPort}"></Setter>
+        <Setter Property="HotspotTemplate" Value="{DynamicResource BooleanHotspotTemplate}"></Setter>
+    </Style>
+    
+    <Style x:Key="OutputBooleanPort" TargetType="{x:Type SchemeControl:PortControl}">
+        <Setter Property="Template" Value="{DynamicResource OutputPort}"></Setter>
+        <Setter Property="HotspotTemplate" Value="{DynamicResource BooleanHotspotTemplate}"></Setter>
+    </Style>
+
+    <Style x:Key="InputIntegerPort" TargetType="{x:Type SchemeControl:PortControl}">
+        <Setter Property="Template" Value="{DynamicResource InputPort}"></Setter>
+        <Setter Property="HotspotTemplate" Value="{DynamicResource IntegerHotspotTemplate}"></Setter>
+    </Style>
+
+</ResourceDictionary>

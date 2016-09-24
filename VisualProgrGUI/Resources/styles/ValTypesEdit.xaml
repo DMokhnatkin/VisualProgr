@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    
+    <DataTemplate DataType="{x:Type system:Boolean}">
+        <CheckBox IsChecked="{Binding Content, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}}"></CheckBox>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type system:Int32}">
+        <TextBox Width="20" Text="{Binding Content, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}}"></TextBox>
+    </DataTemplate>
+
+</ResourceDictionary>
