@@ -1,0 +1,74 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:elements="clr-namespace:VisualProgr.GUI.elements"
+                    xmlns:ports="clr-namespace:VisualProgr.GUI.elements.ports"
+                    xmlns:valControls="clr-namespace:VisualProgr.GUI.elements.valControls"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:converters="clr-namespace:VisualProgr.GUI.elements.converters">
+
+    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"></converters:BoolToVisibilityConverter>
+    <converters:BoolNullToBooleanConverter x:Key="BoolNullToBooleanConverter"></converters:BoolNullToBooleanConverter>
+
+    <SolidColorBrush x:Key="RedBrush">
+        <SolidColorBrush.Color>
+            <Color R="255" G="0" B="0" A="255"></Color>
+        </SolidColorBrush.Color>
+    </SolidColorBrush>
+
+    <SolidColorBrush x:Key="GreenBrush">
+        <SolidColorBrush.Color>
+            <Color R="51" G="204" B="51" A="255"></Color>
+        </SolidColorBrush.Color>
+    </SolidColorBrush>
+
+    <Style x:Key="InputPort" TargetType="ports:VIS_Port">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate x:Name="Port">
+                    <StackPanel Height="15" Orientation="Horizontal" Margin="2" x:Name="SP">
+                        <!--Control to create connections-->
+                        <ContentPresenter Cursor="Hand" Name="ConnectionControl">
+                            <ContentPresenter.Content>
+                                <Canvas Margin="0" Width="12" Height="12" Cursor="Hand">
+                                    <Polygon Points="1,6 10,0 10,12 1,6" Stroke="Black" Fill="{StaticResource GreenBrush}"></Polygon>
+                                </Canvas>
+                            </ContentPresenter.Content>
+                        </ContentPresenter>
+                        <!--Name-->
+                        <TextBlock Padding="2,0" Text="{Binding Path=Port.Name, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <!---Value-->
+                        <Border>
+                            <ContentPresenter Content="{Binding Path=Port, RelativeSource={RelativeSource TemplatedParent}}"
+                                              Cursor="Hand">
+                                <ContentPresenter.ContentTemplate>
+                                    <DataTemplate DataType="{x:Type sys:Boolean}">
+                                        <valControls:VIS_Boolean BindingVal="{Binding Value, Mode=TwoWay, Converter={StaticResource BoolNullToBooleanConverter}}" Visibility="{Binding IsNullConnected, Converter={StaticResource BoolToVisibilityConverter}}" CanBeEdited="True"/>
+                                    </DataTemplate>
+                                </ContentPresenter.ContentTemplate>
+                            </ContentPresenter>
+                        </Border>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="OutputPort" TargetType="ports:VIS_Port">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <StackPanel Height="15" Orientation="Horizontal" Margin="2">
+                        <TextBlock Padding="2,0" Text="{Binding Path=Port.Name, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <ContentPresenter Name="ConnectionControl">
+                            <ContentPresenter.Content>
+                                <Canvas Margin="0" Width="15" Height="15" Cursor="Hand">
+                                    <Polygon Points="11,6 2,0 2,12 11,6" Stroke="Black" Fill="{StaticResource GreenBrush}"></Polygon>
+                                </Canvas>
+                            </ContentPresenter.Content>
+                        </ContentPresenter>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
